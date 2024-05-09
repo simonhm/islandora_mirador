@@ -131,6 +131,7 @@ To display a text overlay, Mirador must be provided with hOCR text data - which 
 ```
 
 to your solr server's `solrconfig.xml`
+
 4. Create a derivative action so when Original File images are uploaded to your repository a `file` media entity is created with `field_media_use` equal to the `hOCR` media use term created by https://github.com/discoverygarden/islandora_hocr. TODO: consider having this action and modules ship with the starter site?
 
 ### Test hOCR
