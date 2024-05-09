@@ -118,19 +118,10 @@ viewer will be able to highlight text found via a search, and display a search i
 within the viewer.
 
 ### Setting up hOCR
+
 To display a text overlay, Mirador must be provided with hOCR text data - which is OCR'd text that includes position information for the extracted text relative to the image that is being displayed. Here are the steps:
-1. Go to "Administration » Structure » Media Types", select the "**File**" media type, and click "**Manage Fields**".
-2. Add a new field to the **File** media type called "**hOCR extracted Text**". Set the allowed file extensions to "xml"<br />![media-file-field_hocr_extracted-file-label.png](docs%2Fmedia-file-field_hocr_extracted-file-label.png)  ![media-file-field_hocr_extracted-file-extensions.png](docs%2Fmedia-file-field_hocr_extracted-file-extensions.png)
-3. Go to "Administration » Configuration » System » Actions" and click "**Create New Advanced Action**" with the "**Generate Extracted Text for Media Attachment**" action type.<br />![action-hocr-extracted-text.png](docs%2Faction-hocr-extracted-text.png)<br />
-![action-hocr-extracted-text-config.png](docs%2Faction-hocr-extracted-text-config.png)<br />
-    - Give the new action a name that mentions hOCR.<br />
-    - In Format field select hOCR Extracted Text with Positional Data
-    - For Destination File Field Name select the field you just created (`field_hocr_extracted_text`)
-    - Keep *None* for the destination text field
-    - And save the action
-4. Go to " Administration » Structure » Context" and edit the **Page Derivatives** context<br />![context-paged-derivatives-add-reaction.png](docs%2Fcontext-paged-derivatives-add-reaction.png)
-    - Click **Add Reaction** and choose "**Derive File for Existing Media**"
-    - In the select box choose the action you created above and save.
+1. Install https://github.com/discoverygarden/islandora_hocr
+2. 
 
 ### Test hOCR
 Follow these steps to confirm that hOCR is working.
