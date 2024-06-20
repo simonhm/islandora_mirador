@@ -121,7 +121,7 @@ within the viewer.
 
 To display a text overlay, Mirador must be provided with hOCR text data - which is OCR'd text that includes position information for the extracted text relative to the image that is being displayed. Here are the steps:
 
-1. Install the [Solr OCR Highlighting Plugin](https://dbmdz.github.io/solr-ocrhighlighting/0.8.3/) in your solr server TODO: consider adding to isle-buildkit
+1. Ensure you're running isle-buildkit version 3.2.6 or above
 2. Install the Drupal modules https://github.com/discoverygarden/islandora_hocr and https://github.com/Born-Digital-US/islandora_iiif_hocr
 3. Add
 ```
@@ -132,7 +132,7 @@ To display a text overlay, Mirador must be provided with hOCR text data - which 
 
 to your solr server's `solrconfig.xml`
 
-4. Create a derivative action so when Original File images are uploaded to your repository a `file` media entity is created with `field_media_use` equal to the `hOCR` media use term created by https://github.com/discoverygarden/islandora_hocr. TODO: consider having this action and modules ship with the starter site?
+4. Create a derivative action so when Original File images are uploaded to your repository a `file` media entity is created with `field_media_use` equal to the `hOCR` media use term created by https://github.com/discoverygarden/islandora_hocr
 
 ### Test hOCR
 Follow these steps to confirm that hOCR is working.
