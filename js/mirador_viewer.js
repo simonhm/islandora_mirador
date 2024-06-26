@@ -27,6 +27,7 @@
             Object.entries(settings.mirador.viewers).forEach(entry => {
               const [base, ] = entry;
               once.remove('mirador-viewer', base, context);
+              delete Drupal.IslandoraMirador.instances[base];
             });
         }
     };
