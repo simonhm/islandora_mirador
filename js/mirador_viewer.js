@@ -14,11 +14,11 @@
         attach: function (context, settings) {
             Drupal.IslandoraMirador.instances = Drupal.IslandoraMirador.instances  || {}
             Object.entries(settings.mirador.viewers).forEach(entry => {
-              const [viewerId, settings] = entry;
-              once('mirador-viewer', viewerId, context).forEach(() =>
+              const [base, values] = entry;
+              once('mirador-viewer', base, context).forEach(() =>
                 // save the mirador instance so other modules can interact
-                // with the store/actions at e.g. drupalSettings.mirador.instances["#mirador-xyz"].store
-                settings.mirador.instances[viewerId] = Mirador.viewer(settings, window.miradorPlugins || {})
+                // with the store/actions at e.g. Drupal.IslandoraMirador.instances["#mirador-xyz"].store
+                Drupal.IslandoraMirador.instances[viewerId] = Mirador.viewer(values, window.miradorPlugins || {})
               );
             });
         },
