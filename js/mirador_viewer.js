@@ -12,10 +12,13 @@
      */
     Drupal.behaviors.Mirador = {
         attach: function (context, settings) {
+            settings.mirador.instances = {}
             Object.entries(settings.mirador.viewers).forEach(entry => {
-              const [base, values] = entry;
-              once('mirador-viewer', base, context).forEach(() =>
-                Mirador.viewer(values, window.miradorPlugins || {})
+              const [viewerId, settings] = entry;
+              once('mirador-viewer', viewerId, context).forEach(() =>
+                // save the mirador instance so other modules can interact
+                // with the store/actions at e.g. drupalSettings.mirador.instances["#mirador-xyz"].store
+                settings.mirador.instances[viewerId] = Mirador.viewer(settings, window.miradorPlugins || {})
               );
             });
         },
