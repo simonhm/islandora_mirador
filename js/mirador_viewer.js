@@ -26,8 +26,10 @@
         detach: function (context, settings) {
             Object.entries(settings.mirador.viewers).forEach(entry => {
               const [base, ] = entry;
-              once.remove('mirador-viewer', base, context);
-              delete Drupal.IslandoraMirador.instances[base];
+              const removed = once.remove('mirador-viewer', base, context);
+              if (removed.length > 0) {
+                delete Drupal.IslandoraMirador.instances[base];
+              }
             });
         }
     };
