@@ -12,7 +12,7 @@
      */
     Drupal.behaviors.Mirador = {
         attach: function (context, settings) {
-            settings.mirador.instances = {}
+            Drupal.IslandoraMirador.instances = Drupal.IslandoraMirador.instances  || {}
             Object.entries(settings.mirador.viewers).forEach(entry => {
               const [viewerId, settings] = entry;
               once('mirador-viewer', viewerId, context).forEach(() =>
