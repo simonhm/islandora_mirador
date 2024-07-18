@@ -12,17 +12,24 @@
      */
     Drupal.behaviors.Mirador = {
         attach: function (context, settings) {
+            Drupal.IslandoraMirador = Drupal.IslandoraMirador || {}
+            Drupal.IslandoraMirador.instances = Drupal.IslandoraMirador.instances || {}
             Object.entries(settings.mirador.viewers).forEach(entry => {
               const [base, values] = entry;
               once('mirador-viewer', base, context).forEach(() =>
-                Mirador.viewer(values, window.miradorPlugins || {})
+                // save the mirador instance so other modules can interact
+                // with the store/actions at e.g. Drupal.IslandoraMirador.instances["#mirador-xyz"].store
+                Drupal.IslandoraMirador.instances[base] = Mirador.viewer(values, window.miradorPlugins || {})
               );
             });
         },
         detach: function (context, settings) {
             Object.entries(settings.mirador.viewers).forEach(entry => {
               const [base, ] = entry;
-              once.remove('mirador-viewer', base, context);
+              const removed = once.remove('mirador-viewer', base, context);
+              if (removed.length > 0) {
+                delete Drupal.IslandoraMirador.instances[base];
+              }
             });
         }
     };
