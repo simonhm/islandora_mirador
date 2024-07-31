@@ -118,19 +118,12 @@ viewer will be able to highlight text found via a search, and display a search i
 within the viewer.
 
 ### Setting up hOCR
+
 To display a text overlay, Mirador must be provided with hOCR text data - which is OCR'd text that includes position information for the extracted text relative to the image that is being displayed. Here are the steps:
-1. Go to "Administration » Structure » Media Types", select the "**File**" media type, and click "**Manage Fields**".
-2. Add a new field to the **File** media type called "**hOCR extracted Text**". Set the allowed file extensions to "xml"<br />![media-file-field_hocr_extracted-file-label.png](docs%2Fmedia-file-field_hocr_extracted-file-label.png)  ![media-file-field_hocr_extracted-file-extensions.png](docs%2Fmedia-file-field_hocr_extracted-file-extensions.png)
-3. Go to "Administration » Configuration » System » Actions" and click "**Create New Advanced Action**" with the "**Generate Extracted Text for Media Attachment**" action type.<br />![action-hocr-extracted-text.png](docs%2Faction-hocr-extracted-text.png)<br />
-![action-hocr-extracted-text-config.png](docs%2Faction-hocr-extracted-text-config.png)<br />
-    - Give the new action a name that mentions hOCR.<br />
-    - In Format field select hOCR Extracted Text with Positional Data
-    - For Destination File Field Name select the field you just created (`field_hocr_extracted_text`)
-    - Keep *None* for the destination text field
-    - And save the action
-4. Go to " Administration » Structure » Context" and edit the **Page Derivatives** context<br />![context-paged-derivatives-add-reaction.png](docs%2Fcontext-paged-derivatives-add-reaction.png)
-    - Click **Add Reaction** and choose "**Derive File for Existing Media**"
-    - In the select box choose the action you created above and save.
+
+1. Ensure you're running isle-buildkit version 3.2.12 or above
+2. Install the Drupal modules https://github.com/discoverygarden/islandora_hocr and https://github.com/Born-Digital-US/islandora_iiif_hocr
+3. Create a derivative action so when Original File images are uploaded to your repository a `file` media entity is created with `field_media_use` equal to the `hOCR` media use term created by https://github.com/discoverygarden/islandora_hocr
 
 ### Test hOCR
 Follow these steps to confirm that hOCR is working.
@@ -146,26 +139,7 @@ Follow these steps to confirm that hOCR is working.
 ### Configuring the IIIF Manifest view for the Manifest additions
 Assuming hOCR is [set up](#setting-up-hocr) and [tested](#test-hocr)...
 
-We will show how to set up IIIF manifests to include text overlay in Mirador for single pages, and for paged content.
-
-1. Go to "Administration » Structure » Views" and edit the **IIIF Manifest** view. This is included in the Islandora Starter Site.
-2. There should be two displays, one for single-page nodes, and one for paged content. They are distinguished by their Contextual filters, found under the "Advanced" tab. In both cases, they have relationships for "field_media_of: Content" (required), and "field_media_use: Taxonomy term" (not required)<br />![view-iiif-manifest-all-relationships.png](docs%2Fview-iiif-manifest-all-relationships.png).<br /> However, they differ in their contextual filters:
-    - The single-page contextual filter uses the current Media entity's "Media of" value, matching it with the "Content ID from the URL". The effect of this is to select all Media objects that are attached to the node identified by the current url.<br />![view-iiif-manifest-1page-contextual-filter.png](docs%2Fview-iiif-manifest-1page-contextual-filter.png)
-    - The paged-content contextual filter uses the "Content: Member of" relationship to find Media objects that are attached to children of the current node, identified by "Content ID from URL".<br/>![view-iiif-manifest-paged-contextual-filter.png](docs%2Fview-iiif-manifest-paged-contextual-filter.png)
-3. The two displays also differ in their path, under "Path Settings". For the single page manifest display, it would normally be `/node/[%node]/manifest` (matching what was configured on the [islandora mirador configuration page](#configuration)), whereas for the paged-content manifest display, it would normally be `/node/[%node]/book-manifest`.
-
-The rest of the settings for the two displays are identical, as follows...<br />
-![view-iiif-manifest-shared-settings.png](docs%2Fview-iiif-manifest-shared-settings.png)
-1. In the left column, under "Fields", add "hOCR Extracted Text".
-2. In the left column, under "Format", the Style plugin "IIIF Manifest" should be selected. Click "Settings". You will see two sets of checkboxes - "Tile source field(s)" and "Structured OCR data file field". Under "Structured OCR data file field", check "Media: hOCR extracted Text".<br />![view-iiif-manifest-style-settings.png](docs%2Fview-iiif-manifest-style-settings.png)
-3. In the "Filter criteria" section of the form, ensure that the "field_media_use: Taxonomy Term" filter is set to filter on the OriginalFile media term (not ServiceFile).
-4. Save the view.
-
-To test...
-1. Go to the Page node you created in [test ocr](#test-hocr) and add "/manifest" to the end of the URL, or whatever you configured in the single page manifest view display.
-2. Look for a seeAlso section in the XML that should contain a reference to the hOCR field with appropriate MIME Type and Description.
-3. Repeat for the paged content node, substituting "/book-manifest" to the end of the url, or whatever you configured for the paged content manifest view display.
-
+Follow the instructions at [https://github.com/Born-Digital-US/islandora_iiif_hocr](https://github.com/Born-Digital-US/islandora_iiif_hocr#usage) to allow searching inside the mirador viewer on your hOCR
 
 ### Configuring the Mirador viewer to display for Pages and Paged Content using Contexts
 
