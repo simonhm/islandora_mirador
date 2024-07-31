@@ -18,7 +18,7 @@ third-party sources.
 ## Installation
 
 ```bash
-$ composer require islandora/islandora_mirador
+$ composer require drupal/islandora_mirador
 $ drush en islandora_mirador
 ```
 
