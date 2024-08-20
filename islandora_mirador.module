@@ -22,7 +22,9 @@ function islandora_mirador_theme() {
         'mirador_view_id' => NULL,
         'thumbnail_navigation_position' => 'far-bottom',
         'window_config' => [],
-        'workspace_config' => [],
+        'workspace_config' => [
+          'showZoomControls' => 'true',
+        ],
       ],
       'template' => 'mirador',
     ],
